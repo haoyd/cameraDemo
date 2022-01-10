@@ -40,7 +40,6 @@ class CameraPreview(
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
-        // empty. Take care of releasing the Camera preview in your activity.
         mCamera.stopPreview()
     }
 

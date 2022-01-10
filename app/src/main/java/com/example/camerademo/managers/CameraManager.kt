@@ -14,35 +14,48 @@ import com.example.camerademo.utils.showToast
  * Date: 2022/1/7
  * Desc: 管理相机
  */
-class CameraManager(context: Activity, containerId: Int) {
+class CameraManager(private val context: Activity, containerId: Int) {
 
-    private val camera: Camera = Camera.open()
     private val mContainer: ViewGroup = context.findViewById(containerId)
-    private val mPreview: CameraPreview by lazy { CameraPreview(context, camera) }
-    private var isAddedPreview = false
     private var imgListener: ImgCallback? = null
 
+    private var frontCameraId = 0
+    private var backCameraId = 0
+    private var isBackCamera = true
+    private var hasOpenedCamera = false
+
+    private var camera: Camera? = null
+        set(value) {
+            field = value
+
+            mContainer.removeAllViews()
+            if (value == null) return
+
+            mContainer.addView(CameraPreview(context, value))
+            camera?.setDisplayOrientation(90)
+            hasOpenedCamera = true
+        }
+
     init {
-        camera.setDisplayOrientation(90)
+        initFrontAndBackCameraId()
     }
 
+    /**
+     * 预览
+     */
     fun startPreview() {
-        if (!isAddedPreview) {
-            mContainer.addView(mPreview)
-        }
-
-        if (isAddedPreview) {
-            camera.startPreview()
-        }
-
-        isAddedPreview = true
+        camera?.startPreview()
     }
 
+    /**
+     * 拍照
+     * @param listener Function1<[@kotlin.ParameterName] Bitmap, Unit>
+     */
     fun capture(listener: ImgCallback) {
         imgListener = listener
 
         try {
-            camera.takePicture(null, null, { data, _ ->
+            camera?.takePicture(null, null, { data, _ ->
                 val sourceImg = ImageUtils.bytes2Bitmap(data)
                 if (sourceImg == null) {
                     showToast("照片获取失败")
@@ -55,6 +68,78 @@ class CameraManager(context: Activity, containerId: Int) {
         } catch (e: Exception) {
             LogUtils.d(e.printStackTrace())
             showToast("拍照失败")
+        }
+    }
+
+    /**
+     * 打开摄像头
+     */
+    fun openCamera() {
+        if (isBackCamera) openBackCamera() else openFrontCamera()
+    }
+
+    /**
+     * 切换前后摄像头
+     */
+    fun switchCamera() {
+        if (isBackCamera) openFrontCamera() else openBackCamera()
+    }
+
+    /**
+     * 打开前摄像头
+     */
+    fun openFrontCamera() {
+        if (hasOpenedCamera && !isBackCamera) {
+            return
+        }
+
+        releaseCamera()
+        camera = Camera.open(frontCameraId)
+        isBackCamera = false
+    }
+
+    /**
+     * 打开后摄像头
+     */
+    fun openBackCamera() {
+        if (hasOpenedCamera && isBackCamera) {
+            return
+        }
+
+        releaseCamera()
+        camera = Camera.open(backCameraId)
+        isBackCamera = true
+    }
+
+    /**
+     * 释放相机
+     */
+    fun releaseCamera() {
+        camera?.stopPreview()
+        camera?.release()
+        camera = null
+    }
+
+    private fun initFrontAndBackCameraId() {
+        val cameraInfo = Camera.CameraInfo()
+        val count = Camera.getNumberOfCameras()
+
+        // 获取第一颗后置摄像头
+        for (i in 0 until count) {
+            Camera.getCameraInfo(i, cameraInfo)
+            if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                frontCameraId = i
+                break
+            }
+        }
+
+        // 获取第一颗前置摄像头
+        for (i in 0 until count) {
+            Camera.getCameraInfo(i, cameraInfo)
+            if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
+                backCameraId = i
+                break
+            }
         }
     }
 }
