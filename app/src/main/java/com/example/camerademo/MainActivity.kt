@@ -1,9 +1,11 @@
 package com.example.camerademo
 
+import android.Manifest
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import com.blankj.utilcode.util.PermissionUtils
 import com.example.camerademo.entity.PageEntity
 import com.example.camerademo.utils.Env
 import kotlinx.android.synthetic.main.activity_main.*
@@ -34,6 +36,11 @@ class MainActivity : BaseActivity(), AdapterView.OnItemClickListener {
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        if (!PermissionUtils.isGranted(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            PermissionUtils.permission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE).request()
+            return
+        }
+
         startPage(pages[position])
     }
 }
