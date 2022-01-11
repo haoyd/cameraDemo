@@ -23,6 +23,7 @@ class CameraManager(private val context: Activity, containerId: Int) {
     private var backCameraId = 0
     private var isBackCamera = true
     private var hasOpenedCamera = false
+    private var rotateDegree = 90
 
     private var camera: Camera? = null
         set(value) {
@@ -32,7 +33,7 @@ class CameraManager(private val context: Activity, containerId: Int) {
             if (value == null) return
 
             mContainer.addView(CameraPreview(context, value))
-            camera?.setDisplayOrientation(90)
+            camera?.setDisplayOrientation(rotateDegree)
             hasOpenedCamera = true
         }
 
@@ -62,7 +63,8 @@ class CameraManager(private val context: Activity, containerId: Int) {
                     return@takePicture
                 }
 
-                val rotatedImg = ImageUtils.rotate(sourceImg, 90, sourceImg.width / 2f, sourceImg.height / 2f)
+                val degree = if (isBackCamera) rotateDegree else rotateDegree * -1
+                val rotatedImg = ImageUtils.rotate(sourceImg, degree, sourceImg.width / 2f, sourceImg.height / 2f)
                 listener.invoke(rotatedImg)
             })
         } catch (e: Exception) {
