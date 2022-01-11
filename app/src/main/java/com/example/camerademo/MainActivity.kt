@@ -7,6 +7,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.blankj.utilcode.util.PermissionUtils
 import com.example.camerademo.entity.PageEntity
+import com.example.camerademo.pages.AiActivity
+import com.example.camerademo.pages.SimpleCameraActivity
 import com.example.camerademo.utils.Env
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -14,6 +16,7 @@ class MainActivity : BaseActivity(), AdapterView.OnItemClickListener {
 
     private val pages = listOf(
         PageEntity("基础功能", SimpleCameraActivity::class.java),
+        PageEntity("人脸检测", AiActivity::class.java),
     )
 
     private val pageNameList: List<String>
