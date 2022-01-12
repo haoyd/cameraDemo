@@ -132,6 +132,8 @@ class CameraManager(private val context: Activity, containerId: Int) {
      * @param listener Function1<[@kotlin.ParameterName] Array<Face>, Unit>
      */
     fun startFaceDetection(listener: FaceCallback) {
+        if (isDetectingFace) return
+
         if (!isSupportDetectFace()) {
             showToast("设备不支持人脸检测")
             return

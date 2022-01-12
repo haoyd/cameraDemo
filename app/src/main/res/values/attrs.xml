@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="ymyy_maxHeight" format="reference|dimension" />
+    <attr name="ymyy_widthHeightRatio" format="float" />
+    <attr name="ymyy_limitHeightByWidth" format="boolean" />
+    <attr name="ymyy_limitWidthByHeight" format="boolean" />
+    <attr name="ymyy_showIndicate" format="boolean" />
+    <attr name="ymyy_isAutoScroll" format="boolean" />
+
+    <declare-styleable name="ymyy_SizeLimitView">
+        <!--最大高度-->
+        <attr name="ymyy_maxHeight" />
+        <!--宽高比-->
+        <attr name="ymyy_widthHeightRatio" />
+        <!--是否通过宽度限制高度比率-->
+        <attr name="ymyy_limitHeightByWidth" />
+        <!--是否通过高度限制宽度比率-->
+        <attr name="ymyy_limitWidthByHeight" />
+    </declare-styleable>
+
+
+</resources>

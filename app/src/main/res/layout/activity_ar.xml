@@ -4,35 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".pages.SimpleCameraActivity">
+    tools:context=".pages.ArActivity">
 
     <com.example.camerademo.widget.SizeLimitLayout
-        android:id="@+id/previewLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:ymyy_widthHeightRatio="0.5625"
-        app:ymyy_limitHeightByWidth="true"/>
+        app:ymyy_limitHeightByWidth="true">
+
+        <FrameLayout
+            android:id="@+id/cameraContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.example.camerademo.widget.ArDisplayView
+            android:id="@+id/arDisplayView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </com.example.camerademo.widget.SizeLimitLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="bottom">
+        android:layout_gravity="center_horizontal|bottom"
+        android:gravity="center">
 
         <Button
-            android:text="拍照"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="capture"
-            />
+            android:text="显示AR"
+            android:onClick="showAr" />
 
         <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="切换摄像头"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="switchCamera"
-            />
-
+            android:onClick="switchCamera" />
     </LinearLayout>
 
 </FrameLayout>

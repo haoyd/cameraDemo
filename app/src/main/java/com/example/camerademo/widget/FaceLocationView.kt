@@ -37,9 +37,7 @@ class FaceLocationView(context: Context, attrs: AttributeSet? = null) : DrawView
         canvas?.setMatrix(mMatrix)
 
         mFaces?.forEach {
-            it.rect?.apply {
-                canvas?.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), mPaint)
-            }
+            canvas?.drawRect(it.rect, mPaint)
 
             it.leftEye?.apply {
                 canvas?.drawText("左眼", x.toFloat(), y.toFloat(), mPaint)

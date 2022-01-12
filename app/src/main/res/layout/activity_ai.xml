@@ -6,15 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".pages.AiActivity">
 
-    <FrameLayout
-        android:id="@+id/cameraContainer"
+    <com.example.camerademo.widget.SizeLimitLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        app:ymyy_widthHeightRatio="0.5625"
+        app:ymyy_limitHeightByWidth="true">
 
-    <com.example.camerademo.widget.FaceLocationView
-        android:id="@+id/faceLocationView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <FrameLayout
+            android:id="@+id/cameraContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.example.camerademo.widget.FaceLocationView
+            android:id="@+id/faceLocationView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.example.camerademo.widget.SizeLimitLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
