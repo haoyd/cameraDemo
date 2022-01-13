@@ -6,6 +6,7 @@ import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.hardware.Camera
 import android.util.AttributeSet
+import android.view.Gravity
 import androidx.appcompat.widget.AppCompatImageView
 import com.example.camerademo.entity.ArEntity
 
@@ -22,6 +23,9 @@ class ArDisplayView(context: Context, attrs: AttributeSet? = null) : AppCompatIm
             field = value
             if (value != null) {
                 mImg = resources.getDrawable(value.res)
+                var imgWidth = mImg!!.minimumWidth.toFloat()
+                var imgHeight = mImg!!.minimumHeight.toFloat()
+                widthHeightRatio = imgWidth / imgHeight
             }
         }
 
@@ -34,6 +38,7 @@ class ArDisplayView(context: Context, attrs: AttributeSet? = null) : AppCompatIm
     private var mMatrix: Matrix? = Matrix()
     private val mRect = RectF()
     private var mImg: Drawable? = null
+    private var widthHeightRatio = 0f
 
     fun setData(faces: Array<Camera.Face>?, matrix: Matrix?) {
         if (faces.isNullOrEmpty() || matrix == null) {
@@ -46,7 +51,7 @@ class ArDisplayView(context: Context, attrs: AttributeSet? = null) : AppCompatIm
 
     @SuppressLint("UseCompatLoadingForDrawables", "DrawAllocation")
     override fun onDraw(canvas: Canvas?) {
-        if (arEntity == null || mFaces.isNullOrEmpty() || canvas == null) {
+        if (arEntity == null || mFaces.isNullOrEmpty() || canvas == null || mImg == null) {
             val paint = Paint()
             paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
             canvas?.drawPaint(paint)
@@ -59,10 +64,24 @@ class ArDisplayView(context: Context, attrs: AttributeSet? = null) : AppCompatIm
             mRect.set(mFaces!![0].rect)
             mMatrix!!.mapRect(mRect)
 
+            val rectWidth = mRect.right - mRect.left
+            val imgScaleHeight = rectWidth / widthHeightRatio
+
             val left = mRect.left + leftOffset
-            val top = mRect.top + topOffset
             val right = mRect.right + rightOffset
-            val bottom = mRect.bottom + bottomOffset
+            val top: Float
+            val bottom: Float
+
+            when (arEntity!!.gravity) {
+                Gravity.TOP -> {
+                    bottom = mRect.top + bottomOffset
+                    top = bottom - imgScaleHeight
+                }
+                else -> {
+                    top = mRect.top + topOffset
+                    bottom = mRect.bottom + bottomOffset
+                }
+            }
 
             mImg?.setBounds(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
             mImg?.draw(canvas)
