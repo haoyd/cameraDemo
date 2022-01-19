@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.camerademo.widget.SizeLimitLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:ymyy_limitHeightByWidth="true"
+    app:ymyy_widthHeightRatio="0.5625"
+    android:layout_width="match_parent"
+    android:layout_height="0dp">
+
+    <FrameLayout
+        android:id="@+id/cameraContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.example.camerademo.widget.ArDisplayView
+        android:id="@+id/arDisplayView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</com.example.camerademo.widget.SizeLimitLayout>

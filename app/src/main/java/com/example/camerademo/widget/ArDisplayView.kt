@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable
 import android.hardware.Camera
 import android.util.AttributeSet
 import android.view.Gravity
+import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import com.example.camerademo.entity.ArEntity
 
@@ -15,7 +16,7 @@ import com.example.camerademo.entity.ArEntity
  * Date: 2022/1/11
  * Desc: 绘制 AR 效果
  */
-class ArDisplayView(context: Context, attrs: AttributeSet? = null) : AppCompatImageView(context, attrs) {
+class ArDisplayView(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
 
     var arEntity: ArEntity? = null
         @SuppressLint("UseCompatLoadingForDrawables")
@@ -23,8 +24,8 @@ class ArDisplayView(context: Context, attrs: AttributeSet? = null) : AppCompatIm
             field = value
             if (value != null) {
                 mImg = resources.getDrawable(value.res)
-                var imgWidth = mImg!!.minimumWidth.toFloat()
-                var imgHeight = mImg!!.minimumHeight.toFloat()
+                val imgWidth = mImg!!.minimumWidth.toFloat()
+                val imgHeight = mImg!!.minimumHeight.toFloat()
                 widthHeightRatio = imgWidth / imgHeight
             }
         }

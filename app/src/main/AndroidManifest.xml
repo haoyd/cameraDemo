@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CameraDemo">
         <activity
+            android:name=".pages.FilterActivity"
+            android:exported="true" />
+        <activity
             android:name=".pages.ArActivity"
             android:exported="true" />
         <activity

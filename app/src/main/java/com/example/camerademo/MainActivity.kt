@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.PermissionUtils
 import com.example.camerademo.entity.PageEntity
 import com.example.camerademo.pages.AiActivity
 import com.example.camerademo.pages.ArActivity
+import com.example.camerademo.pages.FilterActivity
 import com.example.camerademo.pages.SimpleCameraActivity
 import com.example.camerademo.utils.Env
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,6 +20,7 @@ class MainActivity : BaseActivity(), AdapterView.OnItemClickListener {
         PageEntity("基础功能", SimpleCameraActivity::class.java),
         PageEntity("AI 示例", AiActivity::class.java),
         PageEntity("AR 示例", ArActivity::class.java),
+        PageEntity("滤镜示例", FilterActivity::class.java),
     )
 
     private val pageNameList: List<String>

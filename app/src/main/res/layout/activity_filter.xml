@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".pages.FilterActivity">
+
+    <com.example.camerademo.widget.SizeLimitLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:ymyy_widthHeightRatio="0.5625"
+        app:ymyy_limitHeightByWidth="true">
+
+        <FrameLayout
+            android:id="@+id/cameraContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.example.camerademo.widget.ArFilterView
+            android:id="@+id/arFilterView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </com.example.camerademo.widget.SizeLimitLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal|bottom"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="显示滤镜"
+            android:onClick="showFilter"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消滤镜"
+            android:onClick="hideFilter"/>
+    </LinearLayout>
+
+</FrameLayout>
